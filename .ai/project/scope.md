@@ -8,4 +8,4 @@ Exclude accounts, organizations, voting, comments, attachments, email, analytics
 
 AI is used in the engineering workflow. The application itself does not need AI features.
 
-This bootstrap prepares repository context. Product implementation and task decomposition belong to the subsequent Project Executor demonstration.
+Product behaviour for FR-001–FR-007 is implemented on `main`. FR-008 covers reproducibility documentation and sample data before project completion.
