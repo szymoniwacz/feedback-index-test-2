@@ -27,6 +27,19 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
     assert_select "#error_explanation"
   end
 
+  test "create with blank description re-renders form with errors and preserved title" do
+    assert_no_difference "Feedback.count" do
+      post feedbacks_path, params: {
+        feedback: { title: "Kept title", description: "" }
+      }
+    end
+
+    assert_response :unprocessable_entity
+    assert_select "input[name='feedback[title]'][value=?]", "Kept title"
+    assert_select "textarea[name='feedback[description]']", text: ""
+    assert_select "#error_explanation"
+  end
+
   test "new form is accessible" do
     get new_feedback_path
 
@@ -106,6 +119,19 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
     assert_select "input#filter_category_bug[checked]"
   end
 
+  test "index filter shows only feature request items" do
+    Feedback.delete_all
+    Feedback.create!(title: "Crash", description: "App exits.", category: "bug")
+    feature = Feedback.create!(title: "Idea", description: "Dark mode.", category: "feature request")
+
+    get root_path, params: { category: "feature request" }
+
+    assert_response :success
+    assert_select "article h2", count: 1
+    assert_select "article h2 a", text: feature.title
+    assert_select "input#filter_category_feature_request[checked]"
+  end
+
   test "index filter all shows every item" do
     Feedback.delete_all
     Feedback.create!(title: "One", description: "First.", category: "bug")
@@ -164,5 +190,28 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
     assert_match older.description, response.body
     assert_select "time[datetime=?]", newer.created_at.iso8601
     assert_select "time[datetime=?]", older.created_at.iso8601
+  end
+
+  test "index breaks ties by id when created_at matches" do
+    Feedback.delete_all
+    timestamp = Time.zone.parse("2026-09-27 12:00:00")
+    first = Feedback.create!(
+      title: "First tied",
+      description: "Lower id.",
+      created_at: timestamp,
+      updated_at: timestamp
+    )
+    second = Feedback.create!(
+      title: "Second tied",
+      description: "Higher id.",
+      created_at: timestamp,
+      updated_at: timestamp
+    )
+
+    get root_path
+
+    assert_response :success
+    titles = css_select("article h2 a").map(&:text)
+    assert_equal [second.title, first.title], titles
   end
 end
