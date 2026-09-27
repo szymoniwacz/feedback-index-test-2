@@ -9,7 +9,12 @@
 
     <dt>Description</dt>
     <dd><%= simple_format(@feedback.description) %></dd>
+
+    <dt>Category</dt>
+    <dd><%= @feedback.category %></dd>
   </dl>
+
+  <%= render "category_form", feedback: @feedback %>
 
   <p><%= link_to "Back to inbox", root_path %></p>
   <p><%= link_to "Submit more feedback", new_feedback_path %></p>

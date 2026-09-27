@@ -1,0 +1,24 @@
+<%= form_with model: feedback, url: feedback_path(feedback), method: :patch do |form| %>
+  <% if feedback.errors.any? %>
+    <div id="category_error_explanation">
+      <h2><%= pluralize(feedback.errors.count, "error") %> prevented this category change:</h2>
+      <ul>
+        <% feedback.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend>Category</legend>
+    <% Feedback::CATEGORIES.each do |category| %>
+      <div>
+        <%= form.radio_button :category, category, id: "feedback_#{feedback.id}_category_#{category.parameterize(separator: '_')}" %>
+        <%= form.label :category, category, value: category, for: "feedback_#{feedback.id}_category_#{category.parameterize(separator: '_')}" %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <%= form.submit "Update category" %>
+<% end %>

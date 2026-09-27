@@ -21,9 +21,23 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.find(params[:id])
   end
 
+  def update
+    @feedback = Feedback.find(params[:id])
+
+    if @feedback.update(category_params)
+      redirect_to @feedback
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def feedback_params
     params.require(:feedback).permit(:title, :description)
+  end
+
+  def category_params
+    params.require(:feedback).permit(:category)
   end
 end
