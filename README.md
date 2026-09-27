@@ -2,7 +2,7 @@
 
 A small product feedback app used to demonstrate how I work with AI coding agents: define the product, provide durable context, let an agent break a goal into tasks, and inspect the resulting code, tests and review evidence.
 
-**Status:** Feedback Inbox is implemented on `main` (FR-001–FR-007). Load sample data with `bin/rails db:seed` after setup.
+**Status:** Feedback Inbox is implemented on `main` (FR-001–FR-008). Load sample data with `bin/rails db:seed` after setup.
 
 ## What the app does
 
@@ -29,6 +29,7 @@ The walkthrough should take about three minutes. Its evidence is the actual proj
 | FR-005 persistence | [PR #18](https://github.com/szymoniwacz/feedback-index-test-2/pull/18) (goal [#17](https://github.com/szymoniwacz/feedback-index-test-2/issues/17)) |
 | FR-006 invalid requests | [PR #20](https://github.com/szymoniwacz/feedback-index-test-2/pull/20) (goal [#19](https://github.com/szymoniwacz/feedback-index-test-2/issues/19)) |
 | FR-007 tests | [PR #22](https://github.com/szymoniwacz/feedback-index-test-2/pull/22) (goal [#21](https://github.com/szymoniwacz/feedback-index-test-2/issues/21)) |
+| FR-008 reproducibility | [PR #24](https://github.com/szymoniwacz/feedback-index-test-2/pull/24) (goal [#23](https://github.com/szymoniwacz/feedback-index-test-2/issues/23)) |
 | CI on `main` | [Workflow runs](https://github.com/szymoniwacz/feedback-index-test-2/actions/workflows/ci.yml) (`tests/test-adapter.sh` + `bin/rails test`) |
 
 ## What I prepared
