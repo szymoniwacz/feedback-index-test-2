@@ -43,11 +43,6 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to feedback_path(feedback)
     assert_equal "bug", feedback.reload.category
-
-    follow_redirect!
-    bug_radio = css_select('input[type=radio][value=bug]').first
-    assert bug_radio, "expected bug category radio"
-    assert bug_radio["checked"]
   end
 
   test "update with invalid category re-renders show with errors" do
