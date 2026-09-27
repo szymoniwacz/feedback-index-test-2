@@ -23,6 +23,13 @@ class FeedbackTest < ActiveSupport::TestCase
     assert_includes feedback.errors[:description], "can't be blank"
   end
 
+  test "invalid category is rejected" do
+    feedback = Feedback.new(title: "Title", description: "Body", category: "spam")
+
+    assert_not feedback.valid?
+    assert_includes feedback.errors[:category], "is not included in the list"
+  end
+
   test "ordered_for_inbox sorts newest first with id tie-break" do
     Feedback.delete_all
     timestamp = Time.zone.parse("2026-09-27 12:00:00")

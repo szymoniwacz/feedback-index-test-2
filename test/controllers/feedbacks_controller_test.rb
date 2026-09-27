@@ -36,6 +36,46 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
     assert_select "label", text: "Description"
   end
 
+  test "update category persists change" do
+    feedback = Feedback.create!(title: "Export bug", description: "Fails on large files.")
+
+    patch feedback_path(feedback), params: { feedback: { category: "bug" } }
+
+    assert_redirected_to feedback_path(feedback)
+    assert_equal "bug", feedback.reload.category
+
+    follow_redirect!
+    assert_select "input[type=radio][value=bug][checked=checked]"
+  end
+
+  test "update with invalid category re-renders show with errors" do
+    feedback = Feedback.create!(title: "Idea", description: "Nice to have.")
+
+    patch feedback_path(feedback), params: { feedback: { category: "invalid" } }
+
+    assert_response :unprocessable_entity
+    assert_equal "other", feedback.reload.category
+    assert_select "#category_error_explanation"
+
+    get new_feedback_path
+    assert_response :success
+    assert_select "form[action=?]", feedbacks_path
+  end
+
+  test "show category form has unique labelled controls" do
+    first = Feedback.create!(title: "One", description: "First item.")
+    second = Feedback.create!(title: "Two", description: "Second item.")
+
+    get feedback_path(first)
+    assert_response :success
+    assert_select "label[for=?]", "feedback_#{first.id}_category_bug"
+    assert_select "input#feedback_#{first.id}_category_bug[type=radio]"
+
+    get feedback_path(second)
+    assert_select "label[for=?]", "feedback_#{second.id}_category_bug"
+    assert_select "input#feedback_#{second.id}_category_bug[type=radio]"
+  end
+
   test "index lists feedback newest first with required fields" do
     Feedback.delete_all
     older = Feedback.create!(title: "Older item", description: "First submitted.")
