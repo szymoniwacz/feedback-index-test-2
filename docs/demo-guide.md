@@ -25,10 +25,12 @@ Before starting either run, merge bootstrap PR #1, initialize the private workfl
 
 Project Executor delegates; Goal Executor performs eligible merges. This does not require enabling GitHub's delayed auto-merge queue.
 
-The human-review example is [goal #3](https://github.com/szymoniwacz/feedback-inbox/issues/3): a short security checklist in `docs/security-review.md`. Project [#2](https://github.com/szymoniwacz/feedback-inbox/issues/2) must not modify that file. Each run uses an isolated workspace and branch. Start both independently if canonical coordination permits; respect locks if the executor serializes work.
+The human-review example is [goal #3](https://github.com/szymoniwacz/feedback-index-test-2/issues/3): a short security checklist in `docs/security-review.md`. Project [#2](https://github.com/szymoniwacz/feedback-index-test-2/issues/2) must not modify that file. Each run uses an isolated workspace and branch. Start both independently if canonical coordination permits; respect locks if the executor serializes work.
 
 Review the checklist for relevance, correct links, accurate private-workflow boundaries and honest status labels. Do not insert deliberate defects to manufacture review feedback. The human reviewer may request real improvements, then merge manually.
 
 After product implementation, verify the browser flow and real restart persistence against the acceptance details in [requirements](../.ai/docs/project-requirements.md). Update the delivery status and evidence throughout project documentation before announcing project completion.
 
 Record the owner's actual trigger comments and resulting merge evidence. The commands above are reference text, not execution authorization.
+
+For this rehearsal, verify the repository-specific checks in [automation setup](automation-setup.md#rehearsal-repository-verification). A Git mirror does not copy automation configuration or credentials.
