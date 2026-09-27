@@ -1,0 +1,15 @@
+<main>
+  <h1>Feedback received</h1>
+
+  <p>Your submission was saved.</p>
+
+  <dl>
+    <dt>Title</dt>
+    <dd><%= @feedback.title %></dd>
+
+    <dt>Description</dt>
+    <dd><%= simple_format(@feedback.description) %></dd>
+  </dl>
+
+  <p><%= link_to "Submit more feedback", new_feedback_path %></p>
+</main>

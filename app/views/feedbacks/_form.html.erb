@@ -1,0 +1,32 @@
+<%= form_with model: feedback, url: feedbacks_path do |form| %>
+  <% if feedback.errors.any? %>
+    <div role="alert" id="error_explanation">
+      <h2><%= pluralize(feedback.errors.count, "error") %> prevented this feedback from being saved:</h2>
+      <ul>
+        <% feedback.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, "Title" %>
+    <%= form.text_field :title, required: true, aria: { describedby: feedback.errors[:title].any? ? "title_error" : nil } %>
+    <% if feedback.errors[:title].any? %>
+      <p id="title_error" class="field-error"><%= feedback.errors[:title].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :description, "Description" %>
+    <%= form.text_area :description, required: true, rows: 5, aria: { describedby: feedback.errors[:description].any? ? "description_error" : nil } %>
+    <% if feedback.errors[:description].any? %>
+      <p id="description_error" class="field-error"><%= feedback.errors[:description].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit feedback" %>
+  </div>
+<% end %>
