@@ -6,6 +6,6 @@ The application user reviews a local inbox of synthetic feedback. The demo audie
 
 The engineering problem is preserving intent and quality as a short goal becomes implementation. Scope, acceptance criteria and decisions live in files that agents and reviewers can inspect without chat history.
 
-The desired evidence is a real project issue, agent-created goals, scoped pull requests, validation and review. The application implements FR-001–FR-007 on `main`; reproducibility documentation and sample data are tracked under FR-008.
+The desired evidence is a real project issue, agent-created goals, scoped pull requests, validation and review. The application implements FR-001–FR-008 on `main`, including reproducibility documentation, seeds, and verified local commands.
 
 See [requirements](../docs/project-requirements.md), [scope](scope.md) and [decisions](decisions.md).

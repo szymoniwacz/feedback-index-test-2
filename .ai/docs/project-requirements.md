@@ -2,7 +2,7 @@
 
 ## Purpose and current stage
 
-Build a small feedback inbox to demonstrate AI assisted software delivery from a short project goal. This document is the source of truth for acceptance criteria. FR-001–FR-007 are implemented on `main`; FR-008 (reproducible demo documentation and sample data) is the remaining product milestone before project completion.
+Build a small feedback inbox to demonstrate AI assisted software delivery from a short project goal. This document is the source of truth for acceptance criteria. FR-001–FR-008 are implemented on `main`, including reproducible demo documentation and sample data.
 
 The user wants the agent to choose the implementation task breakdown. Do not preassign child tasks or manufacture execution evidence.
 
@@ -126,4 +126,4 @@ Use Ruby on Rails, SQLite and server-rendered HTML for a local-only demo with sy
 | CI, branch rules, and approvals decided | Yes | Adapter contract + economical Rails test job on PRs |
 | Project ready for first product task | Yes | Runtime bootstrap complete; proceed with FR-scoped goals |
 
-This gate passes for product behaviour work. Do not claim FR-001–FR-008 complete until implemented and tested.
+This gate passes for product behaviour work. FR-001–FR-008 are implemented and tested on `main`.
