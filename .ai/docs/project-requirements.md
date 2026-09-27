@@ -70,9 +70,9 @@ bash tests/test-adapter.sh
 
 Workflow initialization additionally needs private template access. Application commands and the active stack profile do not exist yet and must be established before readiness passes.
 
-## Assumptions and proposals
+## Accepted implementation baseline
 
-Ruby on Rails, SQLite and server-rendered HTML are proposed for a local-only demo. Confirm runtime versions and this architecture before implementation. These are not presented as prior user decisions. Szymon confirmed MIT for the entire project, including new application code.
+Use Ruby on Rails, SQLite and server-rendered HTML for a local-only demo with synthetic data and no authentication. These baseline choices are accepted following the owner's review-fix instruction on 2026-09-27. Project #2 selects compatible runtime versions and dependencies, verifies them in the execution environment, records real commands and selects the matching stack profile. Routine choices within this baseline do not require renewed owner confirmation; material departures follow the canonical escalation policy. Szymon confirmed MIT for the entire project, including new application code.
 
 ## Project decision status
 
@@ -88,17 +88,17 @@ Ruby on Rails, SQLite and server-rendered HTML are proposed for a local-only dem
 | Non-goals | decided | Keep a small demo | Quality and boundaries |
 | Interfaces | decided | Web UI for the accepted product flows | Functional requirements |
 | Inputs and outputs | decided | Feedback text, category, filter and inbox | Inputs and outputs |
-| Architecture shape | deferred | Proposed single Rails application; implementation absent | Szymon, runtime bootstrap |
+| Architecture shape | decided | Single Rails application with server-rendered HTML | Accepted baseline; implementing agent |
 | Boundaries | decided | App independent of the private engineering workflow | README setup and workflow sections |
-| Storage and data ownership | deferred | Proposed local SQLite containing synthetic data | Szymon, runtime bootstrap |
+| Storage and data ownership | decided | Local SQLite containing synthetic data | Accepted baseline; implementing agent |
 | Retention and migrations | deferred | Define migration and sample reset commands when storage exists | Implementing agent, before readiness |
 | Integrations and failure handling | decided | No app integrations; workflow setup fails closed if unavailable | Scope and inherited adapter |
-| Authentication and authorization | deferred | Proposed local-only unauthenticated demo; no hosting authorized | Szymon, before implementation |
+| Authentication and authorization | decided | Local-only unauthenticated demo; no public hosting authorized | Accepted baseline; revisit before public exposure |
 | Secrets, privacy, and sensitive data | decided | Synthetic data only; preserve private workflow separation | Quality and boundaries |
-| Language, framework, and dependencies | deferred | Rails proposed; versions and dependencies not selected | Szymon, runtime bootstrap |
-| Environments and deployment | deferred | Local execution proposed; production hosting out of scope | Szymon, runtime bootstrap |
-| Configuration | deferred | Establish app config when stack is selected | Implementing agent, before readiness |
-| Logging, monitoring, and errors | deferred | Readable errors required; logging depends on chosen stack | Implementing agent, before readiness |
+| Language, framework, and dependencies | deferred | Ruby and Rails selected; compatible versions and dependencies to be verified and recorded | Implementing agent, runtime bootstrap |
+| Environments and deployment | decided | Local execution; production hosting out of scope | Accepted baseline; implementing agent verifies environment |
+| Configuration | deferred | Establish app config during runtime bootstrap | Implementing agent, before readiness |
+| Logging, monitoring, and errors | deferred | Readable errors required; logging configuration to be recorded during bootstrap | Implementing agent, before readiness |
 | Tests, lint, typecheck, performance | deferred | Adapter checks exist; application validation commands pending | Implementing agent, runtime bootstrap |
 | Scale, reliability, and cost | decided | Small synthetic demo; no availability SLA or paid app services | Scope |
 | Supported platforms and compatibility | deferred | Select and verify runtime/browser support for demo environment | Implementing agent, runtime bootstrap |
@@ -115,7 +115,7 @@ Ruby on Rails, SQLite and server-rendered HTML are proposed for a local-only dem
 | No `blocking-question` remains | Yes | Future choices explicitly deferred for documentation stage |
 | All `deferred` items have reason and return trigger | Yes | Implementation and target configuration do not exist yet; triggers above |
 | Template customization complete | Partial | Project documents prepared; target automation and runtime pending |
-| Stack profile selected or marked N/A | Pending | Stack proposal not confirmed |
+| Stack profile selected or marked N/A | Pending | Rails baseline accepted; agent selects matching workflow profile during runtime bootstrap |
 | Real project commands recorded | Partial | Adapter commands only |
 | Root README describes the product | Yes | Includes honest current state |
 | `AGENTS.md` describes repository role | Yes | Thin entrypoint retained |
