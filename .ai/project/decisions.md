@@ -11,11 +11,12 @@
 | 2026-09-27 | Demonstrate two execution modes | Project run with eligible automatic squash merges and independent security-checklist goal #3 with human review and manual merge; concurrent where executor coordination permits |
 | 2026-09-27 | Linux adapter CI for this demo | No native platform application is in scope; one runner avoids an unnecessary matrix |
 
-## Proposals before application implementation
+## Implementation baseline
 
-| Proposal | Rationale | Owner / return trigger |
-|---|---|---|
-| Ruby on Rails, SQLite, server-rendered HTML | Familiar stack with few moving parts | Szymon, before runtime bootstrap |
-| Local-only execution, synthetic data, no authentication | Bounded demo; hosting needs a separate access decision | Szymon, before implementation |
+| Decision | Rationale / responsibility |
+|---|---|
+| Ruby on Rails, SQLite, server-rendered HTML | Accepted for this demo following the owner's review-fix instruction on 2026-09-27 |
+| Local-only execution, synthetic data, no authentication | Accepted bounded demo; public hosting remains out of scope |
+| Runtime versions and compatible dependencies | Implementing agent selects, verifies and records these during project #2 bootstrap within the accepted stack |
 
-These proposals do not constitute a completed project readiness gate.
+Do not ask the owner to reconfirm these baseline choices. Escalate material departures under the canonical workflow. Runtime validation and automation verification remain required before product implementation.
