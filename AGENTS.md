@@ -1,6 +1,6 @@
 # Agent Instructions
 
-This is Feedback Inbox, a small product application and AI engineering workflow demonstration. Product context lives in `.ai/project/` and `.ai/docs/project-requirements.md`. Application implementation has not started.
+This is Feedback Inbox, a small product application and AI engineering workflow demonstration. Product context lives in `.ai/project/` and `.ai/docs/project-requirements.md`. A minimal Rails runtime exists; product feedback features are not implemented yet.
 
 This repository uses a private reusable AI workflow through the `.ai-template` submodule.
 

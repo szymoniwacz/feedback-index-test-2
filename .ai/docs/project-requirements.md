@@ -2,9 +2,11 @@
 
 ## Purpose and current stage
 
-Build a small feedback inbox to demonstrate AI assisted software delivery from a short project goal. This document is the source of truth for acceptance criteria. The current stage is repository and documentation preparation; application implementation has not started.
+Build a small feedback inbox to demonstrate AI assisted software delivery from a short project goal. This document is the source of truth for acceptance criteria. The current stage is Rails runtime readiness; product feedback behaviour has not started.
 
 The user wants the agent to choose the implementation task breakdown. Do not preassign child tasks or manufacture execution evidence.
+
+**Active stack profile:** [ruby-rails](../stack-profiles/ruby-rails.md) (Ruby 3.2.3, Rails 8.0.2, SQLite).
 
 ## Users and first useful version
 
@@ -91,20 +93,20 @@ Use Ruby on Rails, SQLite and server-rendered HTML for a local-only demo with sy
 | Architecture shape | decided | Single Rails application with server-rendered HTML | Accepted baseline; implementing agent |
 | Boundaries | decided | App independent of the private engineering workflow | README setup and workflow sections |
 | Storage and data ownership | decided | Local SQLite containing synthetic data | Accepted baseline; implementing agent |
-| Retention and migrations | deferred | Define migration and sample reset commands when storage exists | Implementing agent, before readiness |
+| Retention and migrations | decided | `bin/rails db:prepare` for dev/test; reset via removing `storage/*.sqlite3` and re-running prepare | README and stack profile |
 | Integrations and failure handling | decided | No app integrations; workflow setup fails closed if unavailable | Scope and inherited adapter |
 | Authentication and authorization | decided | Local-only unauthenticated demo; no public hosting authorized | Accepted baseline; revisit before public exposure |
 | Secrets, privacy, and sensitive data | decided | Synthetic data only; preserve private workflow separation | Quality and boundaries |
-| Language, framework, and dependencies | deferred | Ruby and Rails selected; compatible versions and dependencies to be verified and recorded | Implementing agent, runtime bootstrap |
-| Environments and deployment | decided | Local execution; production hosting out of scope | Accepted baseline; implementing agent verifies environment |
-| Configuration | deferred | Establish app config during runtime bootstrap | Implementing agent, before readiness |
-| Logging, monitoring, and errors | deferred | Readable errors required; logging configuration to be recorded during bootstrap | Implementing agent, before readiness |
-| Tests, lint, typecheck, performance | deferred | Adapter checks exist; application validation commands pending | Implementing agent, runtime bootstrap |
+| Language, framework, and dependencies | decided | Ruby 3.2.3, Rails 8.0.2, Bundler; SQLite via `database.yml` | `.ruby-version`, `Gemfile.lock`, stack profile |
+| Environments and deployment | decided | Local execution; production hosting out of scope | README setup; Kamal files are Rails defaults only |
+| Configuration | decided | Standard Rails 8 config; credentials master key gitignored | `config/` |
+| Logging, monitoring, and errors | deferred | Readable errors required for product UI; app logging defaults only | Product goals |
+| Tests, lint, typecheck, performance | decided | `bin/rails test`; RuboCop/Brakeman locally; CI runs adapter + `bin/rails test` | `.github/workflows/ci.yml` |
 | Scale, reliability, and cost | decided | Small synthetic demo; no availability SLA or paid app services | Scope |
-| Supported platforms and compatibility | deferred | Select and verify runtime/browser support for demo environment | Implementing agent, runtime bootstrap |
+| Supported platforms and compatibility | decided | Linux dev/CI; local browser for future UI demo | Verified in goal #4 environment |
 | Accessibility and localization | decided | English interface; labelled keyboard-accessible controls | Quality and boundaries |
 | Compliance, backup, and recovery | not-applicable | Disposable synthetic local demo; revisit if real data is introduced | Scope |
-| Branching, CI, release, and rollback | deferred | Scoped PRs; project auto-merge and separate human-review goal; Linux adapter CI supplied; remote checks and automation still require verification | Szymon and implementing agent, before readiness |
+| Branching, CI, release, and rollback | decided | PR-only CI (adapter + Rails test); project auto-merge on eligible goals | This repository |
 | License, ownership, and documentation expectations | decided | Szymon owns project decisions; MIT confirmed for all project code; maintain setup and validation documentation | LICENSE, README and decision log |
 
 ## Project readiness
@@ -113,15 +115,15 @@ Use Ruby on Rails, SQLite and server-rendered HTML for a local-only demo with sy
 |---|---|---|
 | Definition coverage complete | Yes | Every decision area classified |
 | No `blocking-question` remains | Yes | Future choices explicitly deferred for documentation stage |
-| All `deferred` items have reason and return trigger | Yes | Implementation and target configuration do not exist yet; triggers above |
-| Template customization complete | Partial | Project documents prepared; target automation and runtime pending |
-| Stack profile selected or marked N/A | Pending | Rails baseline accepted; agent selects matching workflow profile during runtime bootstrap |
-| Real project commands recorded | Partial | Adapter commands only |
+| All `deferred` items have reason and return trigger | Yes | Remaining deferred items tied to product behaviour |
+| Template customization complete | Yes | Project documents and Rails scaffold present |
+| Stack profile selected or marked N/A | Yes | Active profile: ruby-rails |
+| Real project commands recorded | Yes | README, stack profile, and verified local runs |
 | Root README describes the product | Yes | Includes honest current state |
 | `AGENTS.md` describes repository role | Yes | Thin entrypoint retained |
 | Bootstrap markers removed | Yes | Supplied project placeholders replaced |
 | License and ownership decided | Yes | MIT explicitly confirmed by Szymon |
-| CI, branch rules, and approvals decided | Partial | Two demo modes documented; target automation unverified |
-| Project ready for first product task | No | Complete runtime bootstrap and automation verification first |
+| CI, branch rules, and approvals decided | Yes | Adapter contract + economical Rails test job on PRs |
+| Project ready for first product task | Yes | Runtime bootstrap complete; proceed with FR-scoped goals |
 
-This gate deliberately remains incomplete. Do not claim a working app or start product implementation based on this document alone.
+This gate passes for product behaviour work. Do not claim FR-001–FR-008 complete until implemented and tested.

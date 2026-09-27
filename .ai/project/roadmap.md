@@ -3,7 +3,7 @@
 | Milestone | Outcome | State |
 |---|---|---|
 | Project definition | Documentation and concise project goal | Prepared for the bootstrap PR |
-| Readiness | Confirm choices, establish real commands, verify automation | Pending |
+| Readiness | Confirm choices, establish real commands, verify automation | In progress (Rails scaffold on goal #4) |
 | Demonstration | Agent delegates goals and delivers behaviour with eligible auto-merges | Pending; no child tasks prescribed |
 | Human review example | Independent security checklist goal #3, with a manually reviewed and merged PR | Planned |
 | Evidence | Link actual issue, PRs, checks and review in README | Pending |

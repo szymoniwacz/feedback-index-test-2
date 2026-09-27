@@ -2,7 +2,7 @@
 
 A small product feedback app used to demonstrate how I work with AI coding agents: define the product, provide durable context, let an agent break a goal into tasks, and inspect the resulting code, tests and review evidence.
 
-**Status:** project definition prepared. The application and recorded demonstration have not been implemented yet.
+**Status:** Rails runtime scaffolded (goal #4). Product feedback behaviour (FR-001–FR-008) is not implemented yet.
 
 ## What the app will do
 
@@ -71,7 +71,14 @@ This updates the private workflow. Changes to public adapter scripts must be rev
 
 ## Setup and validation
 
-Application setup and run commands will be added when the application exists. The selected stack is Ruby on Rails with SQLite and server-rendered HTML, for a local-only demo with synthetic data and no authentication. Project #2 selects compatible runtime versions and records verified commands during bootstrap.
+Application commands (Ruby 3.2.3, Rails 8.0.2, SQLite):
+
+```bash
+bundle install
+bin/rails db:prepare
+bin/rails test
+bin/rails server
+```
 
 Workflow setup requires read access to the private template:
 
@@ -91,7 +98,7 @@ These validate the adapter, not application behaviour. Public readers can inspec
 
 ## Current limits
 
-Application implementation, runtime versions, application commands and the recorded demo remain to be completed. Cloud automation access and triggers need verification for this repository. Documentation preparation does not establish application or automation readiness.
+Product feedback features, sample data, and the recorded demo remain to be completed. Brakeman and RuboCop are available locally (`bin/brakeman`, `bin/rubocop`) but are not separate CI jobs to keep checks economical.
 
 ## License
 
