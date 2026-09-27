@@ -48,15 +48,35 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
   test "update with invalid category re-renders show with errors" do
     feedback = Feedback.create!(title: "Idea", description: "Nice to have.")
 
-    patch feedback_path(feedback), params: { feedback: { category: "invalid" } }
+    patch feedback_path(feedback, category: "bug"), params: { feedback: { category: "invalid" } }
 
     assert_response :unprocessable_entity
     assert_equal "other", feedback.reload.category
     assert_select "#category_error_explanation"
+    assert_select "a[href=?]", root_path(category: "bug"), text: "Back to inbox"
 
     get new_feedback_path
     assert_response :success
-    assert_select "form[action=?]", feedbacks_path
+    assert_select "form[action=?][method=post]", feedbacks_path
+  end
+
+  test "show for missing feedback returns not found without affecting other items" do
+    existing = Feedback.create!(title: "Still here", description: "Unchanged.")
+
+    get feedback_path(9_999_999)
+
+    assert_response :not_found
+    assert_match "does not exist", response.body
+    assert_equal "Still here", existing.reload.title
+  end
+
+  test "update for missing feedback returns not found without affecting other items" do
+    existing = Feedback.create!(title: "Still here", description: "Unchanged.")
+
+    patch feedback_path(9_999_999), params: { feedback: { category: "bug" } }
+
+    assert_response :not_found
+    assert_equal "other", existing.reload.category
   end
 
   test "show category form has unique labelled controls" do
