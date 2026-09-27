@@ -27,12 +27,32 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
     assert_select "#error_explanation"
   end
 
-  test "new form is accessible at root" do
-    get root_path
+  test "new form is accessible" do
+    get new_feedback_path
 
     assert_response :success
     assert_select "form[action=?]", feedbacks_path
     assert_select "label", text: "Title"
     assert_select "label", text: "Description"
+  end
+
+  test "index lists feedback newest first with required fields" do
+    Feedback.delete_all
+    older = Feedback.create!(title: "Older item", description: "First submitted.")
+    newer = Feedback.create!(title: "Newer item", description: "Second submitted.")
+
+    get root_path
+
+    assert_response :success
+    assert_select "h1", text: "Feedback inbox"
+    assert_select "article h2", count: 2
+    titles = css_select("article h2").map(&:text)
+    assert_equal [newer.title, older.title], titles
+    assert_match newer.category, response.body
+    assert_match older.category, response.body
+    assert_match newer.description, response.body
+    assert_match older.description, response.body
+    assert_select "time[datetime=?]", newer.created_at.iso8601
+    assert_select "time[datetime=?]", older.created_at.iso8601
   end
 end

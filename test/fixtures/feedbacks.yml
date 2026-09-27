@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyText
-  category: MyString
+  title: Fixture one
+  description: First fixture item.
+  category: other
 
 two:
-  title: MyString
-  description: MyText
-  category: MyString
+  title: Fixture two
+  description: Second fixture item.
+  category: bug
