@@ -25,7 +25,7 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.find(params[:id])
 
     if @feedback.update(category_params)
-      redirect_to @feedback, notice: "Category updated."
+      redirect_to @feedback
     else
       render :show, status: :unprocessable_entity
     end
