@@ -1,6 +1,12 @@
 class FeedbacksController < ApplicationController
   def index
-    @feedbacks = Feedback.ordered_for_inbox
+    @current_category_filter = Feedback.filter_category_param(params[:category])
+    @filter_active = @current_category_filter.present?
+    @inbox_empty = !Feedback.exists?
+
+    scope = Feedback.ordered_for_inbox
+    scope = scope.where(category: @current_category_filter) if @filter_active
+    @feedbacks = scope
   end
 
   def new
@@ -19,13 +25,15 @@ class FeedbacksController < ApplicationController
 
   def show
     @feedback = Feedback.find(params[:id])
+    @category_filter = params[:category]
   end
 
   def update
     @feedback = Feedback.find(params[:id])
+    @category_filter = params[:category]
 
     if @feedback.update(category_params)
-      redirect_to @feedback
+      redirect_to feedback_path(@feedback, category: preserved_category_filter)
     else
       render :show, status: :unprocessable_entity
     end
@@ -39,5 +47,10 @@ class FeedbacksController < ApplicationController
 
   def category_params
     params.require(:feedback).permit(:category)
+  end
+
+  def preserved_category_filter
+    filter = Feedback.filter_category_param(params[:category])
+    filter.present? ? filter : nil
   end
 end

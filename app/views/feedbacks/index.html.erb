@@ -3,14 +3,24 @@
 
   <p><%= link_to "Submit feedback", new_feedback_path %></p>
 
+  <%= render "category_filter", filter_active: @filter_active, current_category_filter: @current_category_filter %>
+
   <% if @feedbacks.empty? %>
-    <p>No feedback yet. Be the first to submit an item.</p>
+    <% if @filter_active %>
+      <p>No feedback in this category. Try another filter or view all items.</p>
+    <% elsif @inbox_empty %>
+      <p>No feedback yet. Be the first to submit an item.</p>
+    <% else %>
+      <p>No feedback in this category. Try another filter or view all items.</p>
+    <% end %>
   <% else %>
     <ul>
       <% @feedbacks.each do |feedback| %>
         <li>
           <article aria-labelledby="feedback-title-<%= feedback.id %>">
-            <h2 id="feedback-title-<%= feedback.id %>"><%= feedback.title %></h2>
+            <h2 id="feedback-title-<%= feedback.id %>">
+              <%= link_to feedback.title, feedback_path(feedback, category: @current_category_filter.presence) %>
+            </h2>
             <p><%= simple_format(feedback.description) %></p>
             <dl>
               <dt>Category</dt>
