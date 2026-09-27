@@ -42,7 +42,7 @@ Project Executor selects and delegates goals. Goal Executor performs eligible me
 
 These are planned demonstrations. The repository owner starts each run explicitly after merging the bootstrap and verifying workflow access and automation triggers. Project #2 establishes runtime readiness before implementing the app; documentation goal #3 can proceed without the app. Creating an issue does not start a run.
 
-Project [#2](https://github.com/szymoniwacz/feedback-inbox/issues/2) and goal [#3](https://github.com/szymoniwacz/feedback-inbox/issues/3) have separate file ownership and may run concurrently when executor coordination permits. Goal #3 exclusively owns `docs/security-review.md` and always stops for human review.
+Project [#2](https://github.com/szymoniwacz/feedback-index-test-2/issues/2) and goal [#3](https://github.com/szymoniwacz/feedback-index-test-2/issues/3) have separate file ownership and may run concurrently when executor coordination permits. Goal #3 exclusively owns `docs/security-review.md` and always stops for human review.
 
 The [demo guide](docs/demo-guide.md) describes the evidence to capture. No successful execution, CI run or review correction is claimed until it actually happens.
 
@@ -71,7 +71,7 @@ This updates the private workflow. Changes to public adapter scripts must be rev
 
 ## Setup and validation
 
-Application setup and run commands will be added when the application exists. Ruby on Rails with SQLite and server-rendered HTML is the proposed stack, pending confirmation.
+Application setup and run commands will be added when the application exists. The selected stack is Ruby on Rails with SQLite and server-rendered HTML, for a local-only demo with synthetic data and no authentication. Project #2 selects compatible runtime versions and records verified commands during bootstrap.
 
 Workflow setup requires read access to the private template:
 
