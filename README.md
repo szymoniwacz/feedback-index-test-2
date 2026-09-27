@@ -2,19 +2,34 @@
 
 A small product feedback app used to demonstrate how I work with AI coding agents: define the product, provide durable context, let an agent break a goal into tasks, and inspect the resulting code, tests and review evidence.
 
-**Status:** Rails runtime scaffolded (goal #4). Product feedback behaviour (FR-001–FR-008) is not implemented yet.
+**Status:** Feedback Inbox is implemented on `main` (FR-001–FR-007). Load sample data with `bin/rails db:seed` after setup.
 
-## What the app will do
+## What the app does
 
-Users will submit feedback, browse an inbox, assign a category (`bug`, `feature request` or `other`), and filter the list. The scope is deliberately small so that the engineering process is easy to follow.
+Users submit feedback with a title and description, browse an inbox (newest first), assign a category (`bug`, `feature request` or `other`), and filter the list. Data persists in local SQLite across restarts.
 
-This is an independent engineering demo using synthetic data.
+This is an independent engineering demo using synthetic data only.
 
 ## Why I am building this
 
 I want to show how I turn a short product goal into reviewable software using AI. Requirements, context, scope, validation and review need to be explicit as well as the code.
 
-The walkthrough should take about three minutes. Its evidence will be the actual project issue, delegated goals, pull requests and check results.
+The walkthrough should take about three minutes. Its evidence is the actual project issue, delegated goals, pull requests and check results.
+
+## Delivery evidence (this run)
+
+| Artifact | Link |
+|---|---|
+| Project Execution issue | [#2 — Build Feedback Inbox](https://github.com/szymoniwacz/feedback-index-test-2/issues/2) |
+| Runtime readiness (goal #4) | [PR #6](https://github.com/szymoniwacz/feedback-index-test-2/pull/6) |
+| FR-001 submission | [PR #10](https://github.com/szymoniwacz/feedback-index-test-2/pull/10) (goal [#9](https://github.com/szymoniwacz/feedback-index-test-2/issues/9)) |
+| FR-002 browsing | [PR #12](https://github.com/szymoniwacz/feedback-index-test-2/pull/12) (goal [#11](https://github.com/szymoniwacz/feedback-index-test-2/issues/11)) |
+| FR-003 categorization | [PR #14](https://github.com/szymoniwacz/feedback-index-test-2/pull/14) (goal [#13](https://github.com/szymoniwacz/feedback-index-test-2/issues/13)) |
+| FR-004 filtering | [PR #16](https://github.com/szymoniwacz/feedback-index-test-2/pull/16) (goal [#15](https://github.com/szymoniwacz/feedback-index-test-2/issues/15)) |
+| FR-005 persistence | [PR #18](https://github.com/szymoniwacz/feedback-index-test-2/pull/18) (goal [#17](https://github.com/szymoniwacz/feedback-index-test-2/issues/17)) |
+| FR-006 invalid requests | [PR #20](https://github.com/szymoniwacz/feedback-index-test-2/pull/20) (goal [#19](https://github.com/szymoniwacz/feedback-index-test-2/issues/19)) |
+| FR-007 tests | [PR #22](https://github.com/szymoniwacz/feedback-index-test-2/pull/22) (goal [#21](https://github.com/szymoniwacz/feedback-index-test-2/issues/21)) |
+| CI on `main` | [Workflow runs](https://github.com/szymoniwacz/feedback-index-test-2/actions/workflows/ci.yml) (`tests/test-adapter.sh` + `bin/rails test`) |
 
 ## What I prepared
 
@@ -40,11 +55,9 @@ Product task decomposition is intentionally left to Project Executor.
 
 Project Executor selects and delegates goals. Goal Executor performs eligible merges after validation and self-correcting review. High-risk or otherwise ineligible changes still require human review. The independent standalone goal does not inherit the project's authorization.
 
-These are planned demonstrations. The repository owner starts each run explicitly after merging the bootstrap and verifying workflow access and automation triggers. Project #2 establishes runtime readiness before implementing the app; documentation goal #3 can proceed without the app. Creating an issue does not start a run.
-
 Project [#2](https://github.com/szymoniwacz/feedback-index-test-2/issues/2) and goal [#3](https://github.com/szymoniwacz/feedback-index-test-2/issues/3) have separate file ownership and may run concurrently when executor coordination permits. Goal #3 exclusively owns `docs/security-review.md` and always stops for human review.
 
-The [demo guide](docs/demo-guide.md) describes the evidence to capture. No successful execution, CI run or review correction is claimed until it actually happens.
+The [demo guide](docs/demo-guide.md) describes the evidence to capture and how to run the app locally.
 
 ## Reusing and improving the workflow
 
@@ -76,9 +89,12 @@ Application commands (Ruby 3.2.3, Rails 8.0.2, SQLite):
 ```bash
 bundle install
 bin/rails db:prepare
+bin/rails db:seed
 bin/rails test
 bin/rails server
 ```
+
+Then open http://localhost:3000 — the seeded inbox shows synthetic items across categories; use filters and category controls to verify behaviour.
 
 Workflow setup requires read access to the private template:
 
@@ -94,11 +110,11 @@ bash tests/test-adapter.sh
 ./scripts/check-workflow-leak.sh
 ```
 
-These validate the adapter, not application behaviour. Public readers can inspect project documentation and eventual implementation evidence without private workflow access. Running the application must not require that access.
+These validate the adapter, not application behaviour. Public readers can inspect project documentation and implementation evidence without private workflow access. Running the application must not require that access.
 
 ## Current limits
 
-Product feedback features, sample data, and the recorded demo remain to be completed. Brakeman and RuboCop are available locally (`bin/brakeman`, `bin/rubocop`) but are not separate CI jobs to keep checks economical.
+Brakeman and RuboCop are available locally (`bin/brakeman`, `bin/rubocop`) but are not separate CI jobs to keep checks economical. Demo video recording is optional and not required for project completion.
 
 ## License
 

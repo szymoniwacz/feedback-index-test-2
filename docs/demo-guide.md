@@ -29,7 +29,16 @@ The human-review example is [goal #3](https://github.com/szymoniwacz/feedback-in
 
 Review the checklist for relevance, correct links, accurate private-workflow boundaries and honest status labels. Do not insert deliberate defects to manufacture review feedback. The human reviewer may request real improvements, then merge manually.
 
-After product implementation, verify the browser flow and real restart persistence against the acceptance details in [requirements](../.ai/docs/project-requirements.md). Update the delivery status and evidence throughout project documentation before announcing project completion.
+After product implementation, verify the browser flow and real restart persistence against the acceptance details in [requirements](../.ai/docs/project-requirements.md). Local quick start:
+
+```bash
+bundle install
+bin/rails db:prepare
+bin/rails db:seed
+bin/rails server
+```
+
+Open http://localhost:3000, submit an item, change a category, filter, and restart the server to confirm persistence (see `test/integration/restart_persistence_test.rb` for the automated restart check). Update delivery status and evidence throughout project documentation before announcing project completion.
 
 Record the owner's actual trigger comments and resulting merge evidence. The commands above are reference text, not execution authorization.
 
