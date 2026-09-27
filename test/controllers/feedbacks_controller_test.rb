@@ -136,7 +136,7 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: "Feedback inbox"
     assert_select "article h2", count: 2
-    titles = css_select("article h2").map(&:text)
+    titles = css_select("article h2 a").map(&:text)
     assert_equal [newer.title, older.title], titles
     assert_match newer.category, response.body
     assert_match older.category, response.body
