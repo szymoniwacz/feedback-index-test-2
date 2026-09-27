@@ -14,8 +14,8 @@
     <dd><%= @feedback.category %></dd>
   </dl>
 
-  <%= render "category_form", feedback: @feedback %>
+  <%= render "category_form", feedback: @feedback, category_filter: @category_filter %>
 
-  <p><%= link_to "Back to inbox", root_path %></p>
+  <p><%= link_to "Back to inbox", root_path(category: Feedback.filter_category_param(@category_filter)) %></p>
   <p><%= link_to "Submit more feedback", new_feedback_path %></p>
 </main>

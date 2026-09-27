@@ -3,6 +3,13 @@ class Feedback < ApplicationRecord
 
   scope :ordered_for_inbox, -> { order(created_at: :desc, id: :desc) }
 
+  def self.filter_category_param(value)
+    return nil if value.blank? || value == "all"
+    return value if CATEGORIES.include?(value)
+
+    nil
+  end
+
   validates :title, presence: true
   validates :description, presence: true
   validates :category, inclusion: { in: CATEGORIES }

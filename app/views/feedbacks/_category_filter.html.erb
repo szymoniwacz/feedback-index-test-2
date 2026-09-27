@@ -1,0 +1,16 @@
+<%= form_with url: root_path, method: :get, id: "category_filter_form" do %>
+  <fieldset>
+    <legend>Filter by category</legend>
+    <div>
+      <%= radio_button_tag :category, "all", !filter_active, id: "filter_category_all" %>
+      <%= label_tag :filter_category_all, "All" %>
+    </div>
+    <% Feedback::CATEGORIES.each do |category| %>
+      <div>
+        <%= radio_button_tag :category, category, filter_active && current_category_filter == category, id: "filter_category_#{category.parameterize(separator: '_')}" %>
+        <%= label_tag "filter_category_#{category.parameterize(separator: '_')}", category %>
+      </div>
+    <% end %>
+  </fieldset>
+  <%= submit_tag "Apply filter" %>
+<% end %>

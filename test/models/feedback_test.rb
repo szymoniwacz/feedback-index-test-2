@@ -30,6 +30,14 @@ class FeedbackTest < ActiveSupport::TestCase
     assert_includes feedback.errors[:category], "is not included in the list"
   end
 
+  test "filter_category_param normalizes filter values" do
+    assert_nil Feedback.filter_category_param(nil)
+    assert_nil Feedback.filter_category_param("")
+    assert_nil Feedback.filter_category_param("all")
+    assert_equal "bug", Feedback.filter_category_param("bug")
+    assert_nil Feedback.filter_category_param("invalid")
+  end
+
   test "ordered_for_inbox sorts newest first with id tie-break" do
     Feedback.delete_all
     timestamp = Time.zone.parse("2026-09-27 12:00:00")
