@@ -1,5 +1,7 @@
 # Agent Instructions
 
+This is Feedback Inbox, a small product application and AI engineering workflow demonstration. Product context lives in `.ai/project/` and `.ai/docs/project-requirements.md`. Application implementation has not started.
+
 This repository uses a private reusable AI workflow through the `.ai-template` submodule.
 
 If `.ai/README.md` is not available, run `./scripts/setup-ai-workflow.sh` first. If the private workflow cannot be loaded, stop rather than inventing replacement workflow rules.

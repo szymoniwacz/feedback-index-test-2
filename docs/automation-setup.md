@@ -26,7 +26,7 @@ At the beginning of a run, before any repository mutation or remote write:
 5. delegate to the private executor runtime,
 6. fail closed if any of the above cannot be completed.
 
-Materialized private files under `.ai/` are workspace state only. Automation must not stage or commit them.
+Reusable materialized private workflow files under `.ai/` are workspace state only and must not be committed. Allowlisted project-owned `.ai/` documents remain tracked and are maintained by the project.
 
 ## Project Executor loader
 
@@ -65,9 +65,23 @@ Before enabling production automation for a generated repository:
 3. run `./scripts/check-workflow-leak.sh`,
 4. configure the cloud environment with read access to the private submodule,
 5. run a disposable automation invocation and verify the private runtime loads,
-6. verify materialized `.ai/` files are not present in the resulting Git diff,
+6. verify reusable materialized private workflow files are not present in the resulting Git diff,
 7. only then enable normal Project Executor / Goal Executor triggers.
 
 ## Failure behavior
 
 Private workflow unavailable means STOP. The automation must not infer a replacement workflow from README files, public loaders, chat history, or previous runs.
+
+## Rehearsal repository verification
+
+Target: `szymoniwacz/feedback-index-test-2`. Bootstrap PR #1, Project Execution #2 and independent Agent Goal #3 all belong to this repository.
+
+A Git mirror copies Git history and refs, not installed-app permissions, automation repository filters, secrets, branch rules or merge settings. Before posting execution commands:
+
+1. Merge this repository's bootstrap PR #1 and verify its default-branch CI.
+2. In the actual executor environment, verify target-repository write access and private-template read access, then run setup, doctor and the leak check.
+3. Verify both external executor configurations target this exact repository and load their public loaders from its default branch. Use the canonical production-setup documents for required events and filters.
+4. Check that repository rules and available merge methods permit the intended eligible squash merges; preserve canonical review and authorization requirements.
+5. Perform the disposable runtime-load verification described above and record the result. Do not use project #2 or goal #3 as a smoke test or post their execution commands during bootstrap verification.
+
+Connector access and adapter CI do not verify the external executor's credentials or triggers. Until these checks are performed in that environment, automation readiness remains unverified.

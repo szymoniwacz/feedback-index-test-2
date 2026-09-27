@@ -1,116 +1,98 @@
-# ai-project-template-adapter
+# Feedback Inbox
 
-Public GitHub template for using the private `szymoniwacz/ai-project-template` workflow without publishing its reusable workflow files.
+A small product feedback app used to demonstrate how I work with AI coding agents: define the product, provide durable context, let an agent break a goal into tasks, and inspect the resulting code, tests and review evidence.
 
-## How it works
+**Status:** project definition prepared. The application and recorded demonstration have not been implemented yet.
 
-```text
-target repository
-      |
-      v
-.ai-template/                 private git submodule
-      |
-      v
-./scripts/setup-ai-workflow.sh
-      |
-      +--> .ai/               runtime source of truth
-      +--> .agents/skills/    Codex repo skills
-      +--> .cursor/commands/  Cursor slash commands
-      +--> .gitlab/issue_templates/  GitLab issue templates
-      +--> .github/ISSUE_TEMPLATE/  GitHub issue templates
-```
+## What the app will do
 
-Setup updates `.ai-template` to the latest configured remote revision, materializes the private `.ai/` tree, thin tool adapters, and provider issue templates locally, then restores project-owned tracked `.ai/**` files over the workflow.
+Users will submit feedback, browse an inbox, assign a category (`bug`, `feature request` or `other`), and filter the list. The scope is deliberately small so that the engineering process is easy to follow.
 
-Private workflow files may exist in the working tree, but they must never be committed to a public target repository. Materialized GitHub and GitLab issue templates are intended to be tracked so each provider can use them from the target repository's default branch.
+This is an independent engineering demo using synthetic data.
 
-## Create a project
+## Why I am building this
 
-After creating a repository from this template and cloning it:
+I want to show how I turn a short product goal into reviewable software using AI. Requirements, context, scope, validation and review need to be explicit as well as the code.
 
-```bash
-./scripts/setup-ai-workflow.sh
-```
+The walkthrough should take about three minutes. Its evidence will be the actual project issue, delegated goals, pull requests and check results.
 
-The script initializes or updates `.ai-template` and materializes the current private workflow plus Codex/Cursor adapters. Your GitHub identity or automation environment must have read access to `szymoniwacz/ai-project-template`.
+## What I prepared
 
-Then customize the tracked project context under:
+I used AI assistance to prepare this documentation from my project brief. I own the intended outcome, scope and review decisions.
 
-```text
-.ai/project/
-```
+| Preparation | Where to inspect it |
+|---|---|
+| Defined the product, users and purpose | [Product context](.ai/project/product-context.md) |
+| Set acceptance criteria and recorded unresolved choices | [Project requirements](.ai/docs/project-requirements.md) |
+| Kept the demo small with explicit non-goals | [Scope](.ai/project/scope.md) |
+| Recorded decisions and their rationale | [Decision log](.ai/project/decisions.md) |
+| Prepared a short goal without prescribing child tasks | [Project issue draft](docs/demo-project-issue.md) |
+| Reused my workflow through the template adapter | [Workflow setup](docs/setup.md) |
 
-After setup, agents should read `.ai/README.md` and treat `.ai/` as the workflow source of truth. Tool adapters under `.agents/skills/` and `.cursor/commands/` only delegate into that shared workflow.
+Product task decomposition is intentionally left to Project Executor.
 
-## Check the connection
+## Planned demonstration
 
-```bash
-./scripts/ai-workflow-doctor.sh
-```
+| Run | Mode | What it demonstrates |
+|---|---|---|
+| Build the application from a Project Execution issue | `self-correcting-review auto-merge` | Task decomposition, implementation, review, correction and eligible automatic squash merges |
+| Prepare an independent security checklist from Agent Goal #3 | Default `/execute-goal` | A review-ready PR followed by my review and manual merge |
 
-A ready repository ends with:
+Project Executor selects and delegates goals. Goal Executor performs eligible merges after validation and self-correcting review. High-risk or otherwise ineligible changes still require human review. The independent standalone goal does not inherit the project's authorization.
 
-```text
-Status: ready
-```
+These are planned demonstrations. The repository owner starts each run explicitly after merging the bootstrap and verifying workflow access and automation triggers. Project #2 establishes runtime readiness before implementing the app; documentation goal #3 can proceed without the app. Creating an issue does not start a run.
 
-## Prevent workflow leaks
+Project [#2](https://github.com/szymoniwacz/feedback-index-test-2/issues/2) and goal [#3](https://github.com/szymoniwacz/feedback-index-test-2/issues/3) have separate file ownership and may run concurrently when executor coordination permits. Goal #3 exclusively owns `docs/security-review.md` and always stops for human review.
 
-```bash
-./scripts/check-workflow-leak.sh
-```
+The [demo guide](docs/demo-guide.md) describes the evidence to capture. No successful execution, CI run or review correction is claimed until it actually happens.
 
-The check allows private workflow files to exist locally after setup, but fails if reusable materialized workflow files are tracked outside the project-owned overlay allowlist.
+## Reusing and improving the workflow
 
-## Update the private workflow
+This project is based on [ai-project-template-adapter](https://github.com/szymoniwacz/ai-project-template-adapter). It connects a public project to my private reusable workflow through the `.ai-template` Git submodule.
 
-Running setup again updates and rematerializes the workflow and tool adapters:
+| Part | Responsibility |
+|---|---|
+| Private `ai-project-template` | Shared instructions, planning, review and executor procedures |
+| Public template adapter | Setup scripts, tool entrypoints and automation loaders |
+| This project | Product requirements, decisions, application code and evidence |
 
-```bash
-./scripts/setup-ai-workflow.sh
-```
-
-For a revision summary around the same operation, use:
+I can improve the shared workflow centrally and bring those improvements into this project:
 
 ```bash
 ./scripts/update-ai-workflow.sh
+./scripts/ai-workflow-doctor.sh
+./scripts/check-workflow-leak.sh
+git diff --submodule=log -- .ai-template
 ```
 
-Neither script commits the changed `.ai-template` gitlink. Review and commit that change explicitly when you want the project to record the new workflow revision.
+Setup fetches the configured upstream revision, materializes the workflow locally, and restores **tracked project documentation** over it. Add new project overlay files to Git before running setup again. I review and commit the changed submodule reference explicitly; updates are not silently published.
 
-## Cloud automation
+This updates the private workflow. Changes to public adapter scripts must be reviewed and incorporated separately. Private workflow files must not be committed into this public repository.
 
-Public loaders live under:
+## Setup and validation
 
-```text
-docs/ai-workflow/project-executor-loader.md
-docs/ai-workflow/goal-executor-loader.md
+Application setup and run commands will be added when the application exists. The selected stack is Ruby on Rails with SQLite and server-rendered HTML, for a local-only demo with synthetic data and no authentication. Project #2 selects compatible runtime versions and records verified commands during bootstrap.
+
+Workflow setup requires read access to the private template:
+
+```bash
+./scripts/setup-ai-workflow.sh
+./scripts/ai-workflow-doctor.sh
 ```
 
-They contain no private executor logic. They only require the automation environment to obtain the private submodule, materialize `.ai/`, and then delegate to the private runtime.
-
-Automation credentials belong in the provider's runtime/secret configuration, never in this repository.
-
-See `docs/automation-setup.md` for the integration contract.
-
-## Tests
+Public adapter checks do not require private template access:
 
 ```bash
 bash tests/test-adapter.sh
+./scripts/check-workflow-leak.sh
 ```
 
-Tests use a local fake private workflow fixture. CI never requires access to the real private repository.
+These validate the adapter, not application behaviour. Public readers can inspect project documentation and eventual implementation evidence without private workflow access. Running the application must not require that access.
 
-## Design
+## Current limits
 
-- `docs/repository-specification.md` — source-of-truth architecture and invariants.
-- `docs/setup.md` — target repository setup and workflow updates.
-- `docs/automation-setup.md` — cloud automation integration.
-
-## Security model
-
-Someone without access to `szymoniwacz/ai-project-template` may see the repository URL and committed submodule revision, but cannot fetch the private workflow contents. Setup fails closed when the private workflow cannot be loaded.
+Application implementation, runtime versions, application commands and the recorded demo remain to be completed. Cloud automation access and triggers need verification for this repository. Documentation preparation does not establish application or automation readiness.
 
 ## License
 
-MIT
+This project uses the [MIT license](LICENSE), including new application code. The inherited adapter notice is retained.
